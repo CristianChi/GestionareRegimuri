@@ -1,0 +1,62 @@
+﻿@model IEnumerable<GestionareRegimuri.ViewModels.ForumViewModel>
+
+@{
+    ViewData["Title"] = "Forum";
+}
+
+<h1>Forum</h1>
+
+<th class="grid-book-container">
+        <a asp-action="Create" asp-controller="Forum">
+            <table class="table">
+                <thead>
+                    <tr>
+                        Discutie Noua
+                    </tr>
+                </thead>
+            </table>
+        </a>
+    @foreach (var item in Model)
+    {
+        @if (User.IsInRole("Administrator") || User.IsInRole("Medic"))
+        {
+            <a asp-action="Details" asp-route-id="@item.DiscutieID">
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th class="numealiment">
+                                @Html.DisplayFor(modelItem => item.Titlu)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Nume)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Data)
+                            </th>
+                        </tr>
+                    </thread>
+                </table>
+            </a>
+        }
+        else
+        {
+            <a asp-action="Details" asp-route-id="@item.DiscutieID">
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th class="numealiment">
+                                @Html.DisplayFor(modelItem => item.Titlu)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Nume)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Data)
+                            </th>
+                        </tr>
+                    </thread>
+                </table>
+            </a>
+        }
+    }
+</th>

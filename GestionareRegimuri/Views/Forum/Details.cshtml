@@ -1,0 +1,53 @@
+﻿@model GestionareRegimuri.Models.Forum
+
+@{
+    ViewData["Title"] = "Forum";
+}
+
+<h1>Mesaj</h1>
+
+<th class="grid-book-container">
+    @foreach (var item in Model.Mesaje)
+    {
+        @if (User.IsInRole("Administrator") || User.IsInRole("Medic") || User.IsInRole("User"))
+        {
+            <a asp-action="Details" asp-route-id="@item.MesajID">
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.User.UserName)
+                            </th>
+                            <th class="numealiment">
+                                @Html.DisplayFor(modelItem => item.MesajScris)
+                            </th>
+                        </tr>
+                    </thread>
+                </table>
+            </a>
+        }
+        else
+        {
+            <a asp-action="Details" asp-route-id="@item.MesajID">
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.UserID)
+                            </th>
+                            <th class="numealiment">
+                                @Html.DisplayFor(modelItem => item.MesajScris)
+                            </th>
+                        </tr>
+                    </thread>
+                </table>
+            </a>
+        }
+    }
+</th>
+<div class="grid-book-item">
+    <p>
+
+        <a asp-controller="Mesaj" asp-action="Create" asp-route-id="@Model.DiscutieID">Adauga Mesaj</a>
+    </p>
+</div>

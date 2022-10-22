@@ -1,0 +1,43 @@
+﻿@model GestionareRegimuri.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Utilizator</h1>
+
+<h4>Detalii</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Adresă de E-mail</label>
+                <input asp-for="Email" disabled type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label">Nume de utilizator</label>
+                <input asp-for="Username" disabled type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nume</label>
+                <input asp-for="Name" disabled type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Număr de telefon</label>
+                <input asp-for="PhoneNumber" disabled type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Boli" class="control-label">Boli</label>
+                <input asp-for="Boli" disabled type="text" class="form-control" />
+            </div>
+            <a asp-action="Edit" asp-route-id="@ViewBag.id" class="btn btn-primary">Editare</a>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

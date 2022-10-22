@@ -1,0 +1,24 @@
+﻿@model GestionareRegimuri.Models.Reteta
+
+@{
+    ViewData["Title"] = "Detalii";
+}
+
+
+<h1>Detalii</h1>
+<div>
+        <div class="col-md-4">
+            <form asp-action="Details">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="RetetaNume" class="control-label">Nume reteta</label>
+                    <input asp-for="RetetaNume" disabled type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Link" class="control-label">Link</label>
+                    <input asp-for="Link" disabled type="text" class="form-control" />
+                </div>
+            </form>
+
+        </div>
+</div>

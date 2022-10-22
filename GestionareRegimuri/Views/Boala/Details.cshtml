@@ -1,0 +1,84 @@
+﻿@model GestionareRegimuri.Models.Boala
+
+@{
+    ViewData["Title"] = "Detalii";
+}
+
+
+<h1>Details</h1>
+
+<div class="grid-book-item">
+    <p>
+
+        <a asp-controller="Indicatii" asp-action="Create" asp-route-id="@Context.Request.Query["id"]">Adauga Indicatie</a>
+    </p>
+</div>
+<div>
+    @foreach (var item in Model.Indicatii)
+    {
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-controller="Indicatii" asp-action="Edit" asp-route-id="@item.IndicatiiID">
+                <div class="grid-book-item">
+                    <div>
+                        <h1>
+                            @Html.DisplayFor(modelItem => item.Aliment.Nume)
+                        </h1>
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Motiv)
+                    </div>
+                </div>
+            </a>
+        }
+        else
+        {
+            <a asp-area="" asp-controller="Indicatii" asp-action="Create" asp-route-id="@item.IndicatiiID">
+                <div class="grid-book-item">
+                    <div>
+                        <h1>
+                            @Html.DisplayFor(modelItem => item.Aliment.Nume)
+                        </h1>
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Motiv)
+                    </div>
+                </div>
+            </a>}}
+</div>
+<br />
+<div>
+    @foreach (var item in Model.Contraindicatii)
+    {
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-controller="Contraindicatii" asp-action="Edit" asp-route-id="@item.ContraindicatieID">
+                <div class="grid-book-item">
+                    <div>
+                        <h1>
+                            @Html.DisplayFor(modelItem => item.Aliment.Nume)
+                        </h1>
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Motiv)
+                    </div>
+                </div>
+            </a>
+        }
+        else
+        {
+            <a asp-area="" asp-controller="Contraindicatii" asp-action="Create" asp-route-id="@item.ContraindicatieID">
+                <div class="grid-book-item">
+                    <div>
+                        <h1>
+                            @Html.DisplayFor(modelItem => item.Aliment.Nume)
+                        </h1>
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Motiv)
+                    </div>
+                </div>
+            </a>
+        }
+    }
+</div>

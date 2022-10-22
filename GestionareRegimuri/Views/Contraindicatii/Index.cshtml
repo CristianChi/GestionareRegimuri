@@ -1,0 +1,48 @@
+﻿@model IEnumerable<GestionareRegimuri.Models.Contraindicatii>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Creare noua contraindicatie</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Motiv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aliment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Boala)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Motiv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aliment.Categorie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Boala.Nume)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ContraindicatieID">Editare</a> |
+                    <a asp-action="Details" asp-route-id="@item.ContraindicatieID">Detalii</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ContraindicatieID">Sterge</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

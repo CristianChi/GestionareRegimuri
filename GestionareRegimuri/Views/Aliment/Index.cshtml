@@ -1,0 +1,205 @@
+﻿@model IEnumerable<GestionareRegimuri.Models.Aliment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Alimente</h1>
+
+<form autocomplete="off" asp-action="Index">
+    <div class="autocomplete" style="width:300px;">
+        <input id="myInput" name="childname" class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search" />
+        <input type="submit" name="Search" />
+        @*<div class="input-group-append"
+                 <span class="input-group-text" id="basic-text1">
+                     <i aria-hidden="true"></i>
+                 </span>
+            </div>*@
+    </div>
+</form>
+
+<th class="grid-book-container">
+    <table class="table">
+        <thread>
+            <tr>
+                <th class="numealiment">
+                    Nume
+                </th>
+                <th class="valorialiment">
+                    Glucide
+                </th>
+                <th class="valorialiment">
+                    Lipide
+                </th>
+                <th class="valorialiment">
+                    Proteine
+                </th>
+                <th class="valorialiment">
+                    Calorii
+                </th>
+            </tr>
+        </thread>
+    </table>
+    @foreach (var item in Model)
+    {
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-action="Details" asp-route-id="@item.AlimentID">
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th class="numealiment">
+                                @Html.DisplayFor(modelItem => item.Nume)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Glucide)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Lipide)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Proteine)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Calorii)
+                            </th>
+                        </tr>
+                    </thread>
+                </table>
+            </a>
+        }
+        else
+        {
+            <a asp-action="Details" asp-route-id="@item.AlimentID">
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th class="numealiment">
+                                @Html.DisplayFor(modelItem => item.Nume)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Glucide)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Lipide)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Proteine)
+                            </th>
+                            <th class="valorialiment">
+                                @Html.DisplayFor(modelItem => item.Calorii)
+                            </th>
+                        </tr>
+                    </thread>
+                </table>
+            </a>
+        }
+    }
+</th>
+
+
+@section Scripts{ 
+
+    <script>$(function () {
+            $("#basic-text1").click(function () {
+                $("Form").subbmit();
+            })
+        });
+
+        function autocomplete(inp, arr) {
+            var currentFocus;
+            inp.addEventListener("input", function (e) {
+                var a, b, i, val = this.value;
+                closeAllLists();
+                if (!val) { return false; }
+                currentFocus = -1;
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                this.parentNode.appendChild(a);
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        b.addEventListener("click", function (e) {
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            inp.addEventListener("keydown", function (e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    currentFocus++;
+                    addActive(x);
+                } else if (e.keyCode == 38) {
+                    currentFocus--;
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                if (!x) return false;
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+
+        var CautareAlimente = ["Andive", "Anghinare", "Ardei gras rosu", "Ardei gras verde", "Cartofi fierti", "Cartofi maturi", "Cartofi noi", "Cartofi copti", "Cartofi prajiti", "Castraveti", "Ceapa uscata"
+                                , "Ceapa verde", "Ciuperci", "Conopida", "Conopida conservata (sterilizata) in apa", "Conopida fiarta", "Dovleac copt", "Dovlecei", "Dovlecei in apa(sterilizat)", "Fasole boabe"
+                                , "Fasole verde conservata", "Fasole verde pastai cruda", "Gogosari", "Gulii crude", "Hrean", "Hribi", "Linte uscata", "Loboda", "Macris", "Marar (frunze)", "Mazare uscata boabe"
+                                , "Mazare verde boabe", "Mazare verde conservata", "Morcovi cruzi", "Papadie", "Pastarnac", "Patrunjel (frunze)", "Patrunjel radacina", "Praz crud", "Ridichi de iarna", "Ridichi de luna"
+                                , "Rosii bulion", "Rosii pasta", "Rosii proaspete", "Salata verde", "Sfecla rosie", "Spanac crud", "Sparanghel", "Stevie", "Suc de rosii", "Telina (radacina)", "Urzici", "Usturoi"
+                                , "Varza alba cruda, varza creata", "Varza de Bruxelles", "Varza rosie cruda", "Vinete crude", "Afine", "Agrise", "Ananas", "Arahide (alune)", "Banane fara coaja", "Caise fara sambure"
+                                , "Capsuni", "Cirese de iunie", "Cirese de mai", "Coacaze negre", "Coacaze rosii", "Coarne", "Corcoduse", "Dude", "Floarea soarelui (seminte)", "Fragi de padure", "Grapefruit", "Gutui"
+                                , "Kaki", "Kiwi", "Lamai cu coaja", "Mac", "Macese (partea carnoasa)", "Mandarine fara coaja", "Mango", "Masline cu sambure", "Mere cretesti", "Mere ionatane", "Mure", "Nectarine"
+                                , "Nuci verzi fara coaja (samburi)", "Pepene galben cu coaja", "Pepene galben fara coaja", "Pepene verde cu coaja", "Pepene verde fara coaja", "Pere", "Piersici", "Portocale fara coaja"
+                                , "Prune cu samburi", "Prune fara samburi", "Renglote", "Rodie", "Smochine proaspete", "Struguri", "Visine", "Zmeura", "Caise uscate fara samburi", "Curmale uscate cu samburi"
+                                , "Curmale uscate fara samburi", "Cafea prajita", "Castane", "Macese uscate cu seminte", "Mere uscate (poame)", "Nuci uscate (samburi)", "Pere uscate", "Piersici uscate fara samburi"
+                                , "Prune uscate cu samburi", "Smochine uscate", "Stafide uscate", "Afine-suc", "Grapefruit-suc", "Gutui-suc", "Lamai -suc", "Mere-suc", "Mure-suc", "Pepsi", "Pere-suc", "Portocale-suc"
+                                , "Prune-suc", "Struguri-suc", "Zmeura-suc", "Nectar de caise sau piersici", "Nectar de gutui", "Nectar de visine", "Biscuiti", "Faina alba de grau", "Faina de porumb (malai)"
+                                , "Fidea cruda", "Fidea fiarta", "Gris crud", "Gris fiert", "Macaroane crude", "Macaroane fierte", "Mamaliga", "Orez decirtucat crud", "Orez fiert", "Paste fainoase cu ou", "Paine alba"
+                                , "Paine intermediara", "Paine neagra", "Paine Graham", "Pesmet", "Porumb crud fiert", "Spaghete, taitei cruzi", "Spaghete, taitei fierti", "Grau", "Branza dulce de vaci din lapte degresat"
+                                , "Branza dulce de vaci din lapte integral", "Branza telemea de oaie", "Branza telemea de vaca", "Branza topita \"Bucegi\"", "Branza de burduf", "Branza topita pentru copii", "Cas dulce"
+                                , "Cascaval", "Frisca", "Iaurt", "Lapte de vaca integral", "Lapte de vaca degresat", "Lapte de bivolita", "Lapte integral batut, de vaca", "Lapte praf (din lapte normal)", "Smantana"
+                                , "Unt de masa", "Urda", "Carne de curca", "Carne de gaina", "Carne de gasca", "Carne de miel", "Carne de porc slaba", "Carne de porc grasa", "Carne de rata", "Carne de vita", "Carnati"
+                                , "Creier", "Cremvusti, parizer", "Ficat de pui prajit", "Hamburgher", "Muschi tiganesc", "Pateu de ficat", "Salamuri obisnuite", "Salam de Sibiu", "Sunca presata", "Toba"
+                                , "Conserve din carne de porc in suc propiu", "Conserve din carne de vita in suc propiu", "Slanina afumata", "Babusca", "Calcan", "Cod", "Crap", "Heringi", "Icre de crap", "Icre de stiuca"
+                                , "Icre negre (caviar)", "Macrou", "Morun", "Nisetru", "Pastrav", "Somn", "Salau,Stiuca", "Scrumbie", "Stavrid", "Un ou de gaina (50 g)", "Galbenus de ou de gaina (18 g)"
+                                , "Albus de ou de gaina (27 g)", "Praf de ou", "Margarina", "Smantana", "Ulei de floarea soarelui, soia, masline", "Unt", "Untura da porc", "Untura de gasca, seu", "Amidon"
+                                , "Bomboane cu ciocolata", "Bomboane fondate", "Cacao pulbere", "Ciocolata amara(menaj)", "Ciocolata cu lapte", "Caramele cu lapte", "Caramele cu fructe", "Dropsuri, drajeuri"
+                                , "Dulceata de nuci", "Dulceata de trandafir", "Gem de caise, prune", "Gem de visine", "Gem de piersici, zmeura, gutui", "Gem de capsuni", "Glucoza", "Halva de floarea soarelui"
+                                , "Jeleu de afine", "Jeleu de mure", "Marmelada amestec", "Magiun de prune", "Martipan", "Miere", "Nuga", "Praline", "Rahat", "Zahar", "Gelatina uscata"];
+
+
+        autocomplete(document.getElementById("myInput"), CautareAlimente);</script>
+
+}

@@ -1,0 +1,32 @@
+﻿@model GestionareRegimuri.ViewModels.ForumViewModel
+
+@{ ViewData["Title"] = "Discutie"; }
+
+<h1>Creare</h1>
+
+<h4>Discutie Noua</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Forum" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Titlu" class="control-label"></label>
+                <input asp-for="Titlu" class="form-control" />
+                <span asp-validation-for="Titlu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Creare" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Index</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

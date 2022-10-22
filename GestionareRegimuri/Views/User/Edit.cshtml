@@ -1,0 +1,65 @@
+﻿@model GestionareRegimuri.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editare</h1>
+
+<h4>Utilizator</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Context.Request.Query["id"]">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"> Adresă de E-mail</label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <input asp-for="Email" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label">Nume</label>
+                <span asp-validation-for="Username" class="text-danger"></span>
+                <input asp-for="Username" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nume</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Număr de telefon</label>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Boli" class="control-label">Boli</label>
+                <span asp-validation-for="Boli" class="text-danger"></span>
+                <input asp-for="Boli" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Parolă nouă</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <input asp-for="Password" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword">Confirmare parolă</label>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <input asp-for="ConfirmPassword" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentPassword">Parola curenă</label>
+                <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                <input asp-for="CurrentPassword" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvare" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

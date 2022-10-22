@@ -1,0 +1,152 @@
+﻿@model GestionareRegimuri.Models.Aliment
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<h1>@Model.Nume</h1>
+<div>
+    <input type="number" oninput="onUpdate(event)" value="100" />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Glucide
+        </dt>
+        <dt class="col-sm-2">
+            Proteine
+        </dt>
+        <dt class="col-sm-2">
+            Lipide
+        </dt>
+        <dt class="col-sm-2">
+            Calorii
+        </dt>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2" id="Glucide">
+            @Model.Glucide
+        </dt>
+        <dt class="col-sm-2" id="Proteine">
+            @Model.Proteine
+        </dt>
+        <dt class="col-sm-2" id="Lipide">
+            @Model.Lipide
+        </dt>
+        <dt class="col-sm-2" id="Calorii">
+            @Model.Calorii
+        </dt>
+    </dl>
+</div>
+<h2>Indicații</h2>
+<div class="grid-book-container">
+    @if (User.IsInRole("Administrator") || User.IsInRole("Medic"))
+    {
+        <div class="grid-book-item">
+            <p>
+
+                <a asp-controller="Indicatii" asp-action="Create" asp-route-id="@Model.AlimentID">Adauga Indicatie</a>
+            </p>
+        </div>
+    }
+    @foreach (var item in Model.Indicatii)
+    {
+        @if (User.IsInRole("Administrator") || User.IsInRole("Medic"))
+        {
+            <a asp-controller="Indicatii" asp-action="Edit" asp-route-id="@item.IndicatiiID">
+                <div class="@(((int[])ViewBag.Boli).Contains(item.Boala.BoalaID) ? "grid-book-item-green" : "grid-book-item")">
+                    <div>
+                        <h1>
+                            @Html.DisplayFor(modelItem => item.Boala.Nume)
+                        </h1>
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Motiv)
+                    </div>
+                </div>
+            </a>
+        }
+        else
+        {
+            <div class="@(((int[])ViewBag.Boli).Contains(item.Boala.BoalaID) ? "grid-book-item-green" : "grid-book-item")">
+                <div>
+                    <h1>
+                        @Html.DisplayFor(modelItem => item.Boala.Nume)
+                    </h1>
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Motiv)
+                </div>
+            </div>
+        }}
+</div>
+<br />
+<h2>Contraindicații</h2>
+<div class="grid-book-container">
+    @if (User.IsInRole("Administrator") || User.IsInRole("Medic"))
+    {
+        <div class="grid-book-item">
+            <p>
+
+                <a asp-controller="Contraindicatii" asp-action="Create" asp-route-id="@Model.AlimentID">Adauga Contraindicatie</a>
+            </p>
+        </div>
+    }
+    @foreach (var item in Model.Contraindicatii)
+    {
+        @if (User.IsInRole("Administrator") || User.IsInRole("Medic"))
+        {
+            <a asp-controller="Contraindicatii" asp-action="Edit" asp-route-id="@item.ContraindicatieID">
+                <div class="@(((int[])ViewBag.Boli).Contains(item.Boala.BoalaID) ? "grid-book-item-green" : "grid-book-item")">
+                    <div>
+                        <h1>
+                            @Html.DisplayFor(modelItem => item.Boala.Nume)
+                        </h1>
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Motiv)
+                    </div>
+                </div>
+            </a>
+        }
+        else
+        {
+            <div class="@(((int[])ViewBag.Boli).Contains(item.Boala.BoalaID) ? "grid-book-item-green" : "grid-book-item")">
+                <div>
+                    <h1>
+                        @Html.DisplayFor(modelItem => item.Boala.Nume)
+                    </h1>
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Motiv)
+                </div>
+            </div>
+        }
+    }
+</div>
+
+    <div>
+        <a asp-action="Index">Inapoi la tabel</a>
+    </div>
+
+    <script>
+    const valori = {
+        Glucide: @Model.Glucide,
+        Proteine: @Model.Proteine,
+        Lipide: @Model.Lipide,
+        Calorii: @Model.Calorii,
+    }
+
+    function onUpdate(e) {
+        cantitate = e.target.value;
+        if (isNaN(cantitate)) {
+            cantitate = 100;
+        }
+
+        for (const [id, val] of Object.entries(valori)) {
+            loc = document.getElementById(id)
+            if (loc) {
+                loc.innerHTML = val * cantitate / 100;
+            }
+        }
+    }
+    </script>

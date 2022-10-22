@@ -1,0 +1,49 @@
+﻿@model IEnumerable<GestionareRegimuri.Models.Boala>
+
+@{
+    ViewData["Title"] = "Boli";
+}
+
+
+<h1>Boli</h1>
+
+<form autocomplete="off" asp-action="Index">
+    <div class="autocomplete" style="width:300px;">
+        <input id="myInput" name="childname" class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search" />
+        <input type="submit" name="Search" />
+        @*<div class="input-group-append"
+                 <span class="input-group-text" id="basic-text1">
+                     <i aria-hidden="true"></i>
+                 </span>
+            </div>*@
+    </div>
+</form>
+
+<div class="grid-book-container">
+    @foreach (var item in Model)
+    {
+        @if (User.IsInRole("Administrator") || User.IsInRole("Medic"))
+        {
+            <a asp-action="Edit" asp-route-id="@item.BoalaID">
+                <div class="grid-book-item">
+                    <div>
+                        <h1>
+                            @Html.DisplayFor(modelItem => item.Nume)
+                        </h1>
+                    </div>
+                </div>
+            </a>
+        }
+        else
+        {
+            
+            <div class="grid-book-item">
+                <div>
+                    <h1>
+                        @Html.DisplayFor(modelItem => item.Nume)
+                    </h1>
+                </div>
+            </div>
+        }
+    }
+</div>
